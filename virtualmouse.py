@@ -55,7 +55,7 @@ while True:
                 y3 = np.interp(y1, (0, height_cam), (0, height_screen))
 
                 # Move Mouse
-                autopy.mouse.move(x3, y3)
+                autopy.mouse.move(width_screen - x3, y3)
                 cv2.circle(
                     img, (x1, y1), 10,
                     (255, 0, 255), cv2.FILLED
