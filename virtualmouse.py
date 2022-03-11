@@ -46,6 +46,7 @@ while True:
         if len(lm_list) > 15:
             x1, y1 = lm_list[8][1:]
             x2, y2 = lm_list[12][1:]
+
             # Moving Mode - Index finger Up
             if y1 < lm_list[6][2] and y2 > lm_list[10][2]:
                 print("Index Finger Up")
@@ -55,6 +56,10 @@ while True:
 
                 # Move Mouse
                 autopy.mouse.move(x3, y3)
+                cv2.circle(
+                    img, (x1, y1), 10,
+                    (255, 0, 255), cv2.FILLED
+                )
             # Selection Mode - Index and Middle fingers are Up
             elif y1 < lm_list[6][2] and y2 < lm_list[10][2]:
                 print("Index and Middle fingers are Up")
