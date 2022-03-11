@@ -52,6 +52,9 @@ while True:
                 # Convert Coordinates into mouse Coordinates
                 x3 = np.interp(x1, (0, width_cam), (0, width_screen))
                 y3 = np.interp(y1, (0, height_cam), (0, height_screen))
+
+                # Move Mouse
+                autopy.mouse.move(x3, y3)
             # Selection Mode - Index and Middle fingers are Up
             elif y1 < lm_list[6][2] and y2 < lm_list[10][2]:
                 print("Index and Middle fingers are Up")
