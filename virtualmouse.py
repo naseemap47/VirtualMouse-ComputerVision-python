@@ -1,6 +1,8 @@
 import cv2
 import time
 import mediapipe as mp
+import autopy
+import numpy as np
 
 width_cam, height_cam = 640, 480
 
@@ -11,8 +13,9 @@ cap.set(4, width_cam)
 mp_hand = mp.solutions.hands
 hand = mp_hand.Hands(max_num_hands=1)
 mp_draw = mp.solutions.drawing_utils
-
 p_time = 0
+
+width_screen, height_screen = autopy.screen.size()
 
 while True:
     # Draw Hand Landmarks
@@ -41,11 +44,16 @@ while True:
             )
         # print(lm_list)
         if len(lm_list) > 15:
+            x1, y1 = lm_list[8][1:]
+            x2, y2 = lm_list[12][1:]
             # Moving Mode - Index finger Up
-            if lm_list[8][2] < lm_list[6][2] and lm_list[12][2] > lm_list[10][2]:
+            if y1 < lm_list[6][2] and y2 > lm_list[10][2]:
                 print("Index Finger Up")
+                # Convert Coordinates into mouse Coordinates
+                x3 = np.interp(x1, (0, width_cam), (0, width_screen))
+                y3 = np.interp(y1, (0, height_cam), (0, height_screen))
             # Selection Mode - Index and Middle fingers are Up
-            elif lm_list[8][2] < lm_list[6][2] and lm_list[12][2] < lm_list[10][2]:
+            elif y1 < lm_list[6][2] and y2 < lm_list[10][2]:
                 print("Index and Middle fingers are Up")
 
     # Frame Per Sec
