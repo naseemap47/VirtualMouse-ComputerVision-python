@@ -42,8 +42,11 @@ while True:
         # print(lm_list)
         if len(lm_list) > 15:
             # Moving Mode - Index finger Up
-            if lm_list[8][2] < lm_list[6][2]:
+            if lm_list[8][2] < lm_list[6][2] and lm_list[12][2] > lm_list[10][2]:
                 print("Index Finger Up")
+            # Selection Mode - Index and Middle fingers are Up
+            elif lm_list[8][2] < lm_list[6][2] and lm_list[12][2] < lm_list[10][2]:
+                print("Index and Middle fingers are Up")
 
     # Frame Per Sec
     c_time = time.time()
