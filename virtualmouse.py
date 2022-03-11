@@ -3,6 +3,7 @@ import time
 import mediapipe as mp
 import autopy
 import numpy as np
+import math
 
 #####################################
 width_cam, height_cam = 640, 480
@@ -57,7 +58,7 @@ while True:
 
             # Moving Mode - Index finger Up
             if y1 < lm_list[6][2] and y2 > lm_list[10][2]:
-                print("Index Finger Up")
+                # print("Index Finger Up")
                 # Convert Coordinates into mouse Coordinates
                 x3 = np.interp(x1, (frame_reduction, width_cam - frame_reduction), (0, width_screen))
                 y3 = np.interp(y1, (frame_reduction, height_cam - frame_reduction), (0, height_screen))
@@ -70,7 +71,14 @@ while True:
                 )
             # Selection Mode - Index and Middle fingers are Up
             elif y1 < lm_list[6][2] and y2 < lm_list[10][2]:
-                print("Index and Middle fingers are Up")
+                # print("Index and Middle fingers are Up")
+
+                # Find Length between Index and middle finger
+                length = math.hypot(x2 - x1, y2 - y1)
+                # print(length)
+                # If length < 32 - Mouse Click
+                if length < 32:
+                    autopy.mouse.click()
 
     # Frame Per Sec
     c_time = time.time()
