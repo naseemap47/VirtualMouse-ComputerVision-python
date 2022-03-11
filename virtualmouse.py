@@ -9,12 +9,13 @@ cap.set(3, height_cam)
 cap.set(4, width_cam)
 
 mp_hand = mp.solutions.hands
-hand = mp_hand.Hands()
+hand = mp_hand.Hands(max_num_hands=1)
 mp_draw = mp.solutions.drawing_utils
 
 p_time = 0
 
 while True:
+    # Draw Hand Landmarks
     success, img = cap.read()
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     result = hand.process(img_rgb)
@@ -29,8 +30,8 @@ while True:
                 x_list.append(x)
                 y_list.append(y)
                 lm_list.append([id, x, y])
-                # print(lm_list)
                 mp_draw.draw_landmarks(img, hand_lm, mp_hand.HAND_CONNECTIONS)
+
                 x_min, x_max = min(x_list), max(x_list)
                 y_min, y_max = min(y_list), max(y_list)
             cv2.rectangle(
@@ -38,7 +39,9 @@ while True:
                 (x_max + 20, y_max + 20),
                 (0, 255, 0), 2
             )
+        print(lm_list)
 
+    # Frame Per Sec
     c_time = time.time()
     fps = 1 / (c_time - p_time)
     p_time = c_time
