@@ -1,5 +1,6 @@
 import cv2
 import time
+import mediapipe as mp
 
 width_cam, height_cam = 640, 480
 
@@ -7,11 +8,25 @@ cap = cv2.VideoCapture(0)
 cap.set(3, height_cam)
 cap.set(4, width_cam)
 
+mp_hand = mp.solutions.hands
+hand = mp_hand.Hands()
+mp_draw = mp.solutions.drawing_utils
+
 p_time = 0
 
 while True:
     success, img = cap.read()
-
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    result = hand.process(img_rgb)
+    if result.multi_hand_landmarks:
+        lm_list = []
+        for hand_lm in result.multi_hand_landmarks:
+            for id, lm in enumerate(hand_lm.landmark):
+                height, width, channel = img.shape
+                x, y = int(lm.x * width), int(lm.y * height)
+                lm_list.append([id, x, y])
+                print(lm_list)
+                mp_draw.draw_landmarks(img, hand_lm, mp_hand.HAND_CONNECTIONS)
     c_time = time.time()
     fps = 1 / (c_time - p_time)
     p_time = c_time
