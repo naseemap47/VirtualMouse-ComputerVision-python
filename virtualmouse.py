@@ -4,7 +4,10 @@ import mediapipe as mp
 import autopy
 import numpy as np
 
+#####################################
 width_cam, height_cam = 640, 480
+frame_reduction = 100
+#####################################
 
 cap = cv2.VideoCapture(0)
 cap.set(3, height_cam)
@@ -47,12 +50,17 @@ while True:
             x1, y1 = lm_list[8][1:]
             x2, y2 = lm_list[12][1:]
 
+            # Frame Reduction
+            cv2.rectangle(img, (frame_reduction, frame_reduction),
+                          (width_cam - frame_reduction, height_cam - frame_reduction),
+                          (255, 255, 0), 3)
+
             # Moving Mode - Index finger Up
             if y1 < lm_list[6][2] and y2 > lm_list[10][2]:
                 print("Index Finger Up")
                 # Convert Coordinates into mouse Coordinates
-                x3 = np.interp(x1, (0, width_cam), (0, width_screen))
-                y3 = np.interp(y1, (0, height_cam), (0, height_screen))
+                x3 = np.interp(x1, (frame_reduction, width_cam - frame_reduction), (0, width_screen))
+                y3 = np.interp(y1, (frame_reduction, height_cam - frame_reduction), (0, height_screen))
 
                 # Move Mouse
                 autopy.mouse.move(width_screen - x3, y3)
