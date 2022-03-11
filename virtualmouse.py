@@ -78,6 +78,10 @@ while True:
                 # print(length)
                 # If length < 32 - Mouse Click
                 if length < 32:
+                    cv2.circle(
+                        img, (x1, y1), 10,
+                        (0, 255, 0), cv2.FILLED
+                    )
                     autopy.mouse.click()
 
     # Frame Per Sec
