@@ -39,7 +39,11 @@ while True:
                 (x_max + 20, y_max + 20),
                 (0, 255, 0), 2
             )
-        print(lm_list)
+        # print(lm_list)
+        if len(lm_list) > 15:
+            # Moving Mode - Index finger Up
+            if lm_list[8][2] < lm_list[6][2]:
+                print("Index Finger Up")
 
     # Frame Per Sec
     c_time = time.time()
