@@ -32,8 +32,11 @@ Creating a virtual mouse using OpenCV, Mediapipe and autopy in python
 
 ## Requirements
 #### Programming Language
-* Python3 (pyCharm)
+* Python 3.8 (Must needed)
 #### Libraries
+```
+pip3 install -r requirements.txt
+```
 * OpenCV
 * Mediapipe
 * Autopy
